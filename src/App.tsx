@@ -1,4 +1,3 @@
-// App.tsx
 import Product from './Components/Product';
 
 const products = [
