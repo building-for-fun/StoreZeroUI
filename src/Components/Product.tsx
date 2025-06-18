@@ -1,5 +1,5 @@
 // Product.tsx
-type ProductProps = {
+ export type ProductProps = {
   name: string;
   description: string;
   price: number;
