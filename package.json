@@ -8,10 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --color",
     "preview": "vite preview",
+    "format": "prettier \"**/*.{ts,js,tsx,jsx,css}\" --write",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,js}": [
+    "*.{ts,tsx,js,jsx,css}": [
       "eslint --fix",
       "prettier --write"
     ]
