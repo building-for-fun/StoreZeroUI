@@ -1,5 +1,9 @@
-// Product.tsx
+import { FaStar, FaShoppingCart, FaHeart, FaRegHeart } from 'react-icons/fa'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
 export type ProductProps = {
+    id: number
     name: string
     description: string
     price: number
@@ -8,74 +12,80 @@ export type ProductProps = {
 }
 
 export default function Product({
+    id,
     name,
     description,
     price,
     imageUrl,
 }: ProductProps) {
+    const [added, setadded] = useState(false)
+    const [wishlisted, setWishlisted] = useState(false)
+
     return (
-        <div style={styles.card}>
-            <div style={styles.imageContainer}>
-                <img src={imageUrl} alt={name} style={styles.img} />
+        <Link to={`/product/${id}`} className="no-underline text-inherit">
+            <div className="w-40 min-h-[100px] bg-white border border-gray-200 shadow-sm flex flex-col items-center hover:shadow-lg hover:-translate-y-1 transition m-2 rounded shrink-0">
+                <div className="w-full h-32 flex justify-center items-center overflow-hidden rounded-t-xl">
+                    <img
+                        src={imageUrl}
+                        alt={name}
+                        className="max-h-28 max-w-[90%] object-contain"
+                    />
+                </div>
+
+                <h1 className="text-sm font-semibold mt-2 mb-1 text-center line-clamp-2 min-h-[40px] px-2">
+                    {name}
+                </h1>
+
+                <div className="text-xs text-gray-500 text-center px-3 mb-1 min-h-[30px] line-clamp-2">
+                    {description}
+                </div>
+
+                <div className="text-sm font-bold text-[#B12704] mt-auto mb-2 text-center">
+                    ₹{price.toLocaleString()}
+                </div>
+
+                <div className="flex flex-row mb-1 text-sm text-yellow-500">
+                    <FaStar />
+                    <FaStar />
+                    <FaStar />
+                    <FaStar />
+                    <FaStar />
+                </div>
+
+                <div className="flex items-center justify-center gap-2 mb-2">
+                    <button
+                        onClick={e => {
+                            e.preventDefault()
+                            setadded(!added)
+                        }}
+                        className={`flex items-center gap-1 px-2 py-[5px] rounded text-white text-xs
+              ${added ? 'bg-red-600' : 'bg-gray-500'}
+              hover:opacity-90 transition`}
+                    >
+                        <FaShoppingCart className="text-xs" />
+                        {added ? 'Added' : 'Add'}
+                    </button>
+
+                    <button
+                        onClick={e => {
+                            e.preventDefault()
+                            setWishlisted(!wishlisted)
+                        }}
+                        className="w-7 h-7 rounded-full bg-red-100 flex items-center justify-center text-blue-600 hover:scale-110 transition"
+                        title={
+                            wishlisted
+                                ? 'Remove from wishlist'
+                                : 'Add to wishlist'
+                        }
+                    >
+                        {wishlisted ? (
+                            <FaHeart size={12} />
+                        ) : (
+                            <FaRegHeart size={12} />
+                        )}
+                    </button>
+                </div>
             </div>
-            <h1 style={styles.name}>{name}</h1>
-            <div id="des" style={styles.description}>
-                {description}
-            </div>
-            {/* <p>Category: {categoryId}</p> */}
-            <p style={styles.price}>
-                <h3>Price: ₹{price}</h3>
-            </p>
-        </div>
+        </Link>
     )
-}
-const styles: { [key: string]: React.CSSProperties } = {
-    card: {
-        width: '160px',
-        height: '340px',
-        padding: '6px',
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        backgroundColor: '#fff',
-        boxShadow: '0 1px 4px rgba(0, 0, 0, 0.1)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        fontFamily: 'sans-serif',
-    },
-
-    imageContainer: {
-        width: '100%',
-        height: '120px',
-        marginBottom: '8px',
-    },
-
-    img: {
-        width: '100%',
-        height: '100%',
-        objectFit: 'contain' as const,
-        borderRadius: '4px',
-    },
-
-    name: {
-        fontSize: '14px',
-        fontWeight: 'bold',
-        margin: '6px 0 4px 0',
-        textAlign: 'center',
-    },
-
-    description: {
-        fontSize: '12px',
-        color: '#555',
-        textAlign: 'center',
-        marginBottom: '6px',
-        lineHeight: '1.3',
-    },
-
-    price: {
-        color: 'red',
-        fontSize: '14px',
-        fontWeight: 500,
-    },
 }
