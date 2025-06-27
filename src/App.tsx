@@ -1,36 +1,22 @@
-// App.tsx
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import Product from './Components/Product'
-import { type ProductProps } from './Components/Product'
-import { Layout } from './Components/Layout.tsx'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import ProductDetail from './Components/Productdetail'
+import { Layout } from './Components/Layout'
 
 export default function App() {
-    const [products, setProducts] = useState<ProductProps[]>([])
-
-    useEffect(() => {
-        axios
-            .get('http://localhost:3000/product')
-            .then(res => {
-                console.log('Fetched products:', res.data) // add this
-                setProducts(res.data)
-            })
-            .catch(err => {
-                console.error('Error fetching products:', err.message) // clearer
-            })
-    }, [])
-
     return (
-        <Layout>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-                {products.length === 0 ? (
-                    <p>Loading or no products available...</p>
-                ) : (
-                    products.map((product, index) => (
-                        <Product key={index} {...product} />
-                    ))
-                )}
-            </div>
-        </Layout>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                    path="/product/:id"
+                    element={
+                        <Layout>
+                            <ProductDetail />
+                        </Layout>
+                    }
+                />
+            </Routes>
+        </Router>
     )
 }
