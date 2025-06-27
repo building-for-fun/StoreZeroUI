@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
-import Product, { type ProductProps } from './Product'
+import Product, { type ProductProps } from '../Components/Product.tsx'
 
-import { Layout } from './Layout.tsx'
+import { Layout } from '../Components/Layout.tsx'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
-export default function App() {
+export default function Home() {
     const [products, setProducts] = useState<ProductProps[]>([])
     const scrollRef = useRef<HTMLDivElement>(null)
 
